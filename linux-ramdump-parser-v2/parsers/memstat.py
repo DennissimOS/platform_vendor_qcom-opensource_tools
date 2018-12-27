@@ -222,7 +222,11 @@ class MemStats(RamParser):
         # vmalloc area
         self.calculate_vmalloc()
 
-        accounted_mem = total_free + total_slab + ion_mem + kgsl_memory + \
+        if type(ion_mem) is str:
+            accounted_mem = total_free + total_slab + kgsl_memory + \
+                            self.vmalloc_size + other_mem
+        else:
+            accounted_mem = total_free + total_slab + ion_mem + kgsl_memory + \
                         self.vmalloc_size + other_mem
 
         unaccounted_mem = total_mem - accounted_mem
