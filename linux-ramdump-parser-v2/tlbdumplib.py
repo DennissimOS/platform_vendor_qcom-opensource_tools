@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+# Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -744,6 +744,21 @@ lookuptable[("steppe", 0x125, 0x14)] = L2_TLB_KRYO4XX_SILVER()
 lookuptable[("steppe", 0x126, 0x14)] = L2_TLB_KRYO4XX_GOLD()
 lookuptable[("steppe", 0x127, 0x14)] = L2_TLB_KRYO4XX_GOLD()
 
+#lito
+lookuptable[("lito", 0x26, 0x14)] = L1_ITLB_KRYO4XX_GOLD()
+lookuptable[("lito", 0x27, 0x14)] = L1_ITLB_KRYO4XX_GOLD()
+
+lookuptable[("lito", 0x46, 0x14)] = L1_DTLB_KRYO4XX_GOLD()
+lookuptable[("lito", 0x47, 0x14)] = L1_DTLB_KRYO4XX_GOLD()
+
+lookuptable[("lito", 0x120, 0x14)] = L2_TLB_KRYO4XX_SILVER()
+lookuptable[("lito", 0x121, 0x14)] = L2_TLB_KRYO4XX_SILVER()
+lookuptable[("lito", 0x122, 0x14)] = L2_TLB_KRYO4XX_SILVER()
+lookuptable[("lito", 0x123, 0x14)] = L2_TLB_KRYO4XX_SILVER()
+lookuptable[("lito", 0x124, 0x14)] = L2_TLB_KRYO4XX_SILVER()
+lookuptable[("lito", 0x125, 0x14)] = L2_TLB_KRYO4XX_SILVER()
+lookuptable[("lito", 0x126, 0x14)] = L2_TLB_KRYO4XX_GOLD()
+lookuptable[("lito", 0x127, 0x14)] = L2_TLB_KRYO4XX_GOLD()
 
 # "sdm845"
 lookuptable[("sdm845", 0x120, 0x14)] = L2_TLB_KRYO3XX_SILVER()
