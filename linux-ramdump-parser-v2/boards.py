@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
+# Copyright (c) 2014-2019, The Linux Foundation. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 and
@@ -655,6 +655,19 @@ class BoardPoorwills(Board):
         self.wdog_addr =  0x14680658
         self.imem_file_name = 'OCIMEM.BIN'
 
+class BoardPrairie(Board):
+    def __init__(self, socid):
+        super(BoardPrairie, self).__init__()
+        self.socid = socid
+        self.board_num = "sdxprairie"
+        self.cpu = 'CORTEXA7'
+        self.ram_start = 0x80000000
+        self.smem_addr = 0xFE40000
+        self.phys_offset = 0x80000000
+        self.imem_start = 0x14680000
+        self.wdog_addr =  0x14680658
+        self.imem_file_name = 'OCIMEM.BIN'
+
 boards = []
 
 boards.append(Board9640(socid=234))
@@ -891,6 +904,9 @@ boards.append(BoardTrinket(socid=394))
 
 boards.append(BoardPoorwills(socid=334))
 boards.append(BoardPoorwills(socid=335))
+
+boards.append(BoardPrairie(socid=357))
+boards.append(BoardPrairie(socid=368))
 
 boards.append(Board439(socid=353))
 boards.append(Board439(socid=363))
