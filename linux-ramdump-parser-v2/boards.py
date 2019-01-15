@@ -668,6 +668,21 @@ class BoardPrairie(Board):
         self.wdog_addr =  0x14680658
         self.imem_file_name = 'OCIMEM.BIN'
 
+class BoardKona(Board):
+    def __init__(self, socid):
+        super(BoardKona, self).__init__()
+        self.socid = socid
+        self.board_num = "kona"
+        self.cpu = 'CORTEXA53'
+        self.ram_start = 0x80000000
+        self.smem_addr = 0x900000
+        self.smem_addr_buildinfo = 0x907210
+        self.phys_offset = 0xA0000000
+        self.imem_start = 0x14680000
+        self.kaslr_addr = 0x146bf6d0
+        self.wdog_addr = 0x146BF658
+        self.imem_file_name = 'OCIMEM.BIN'
+
 boards = []
 
 boards.append(Board9640(socid=234))
@@ -913,6 +928,8 @@ boards.append(Board439(socid=363))
 
 boards.append(Board429(socid=354))
 boards.append(Board429(socid=364))
+
+boards.append(BoardKona(socid=356))
 
 def get_supported_boards():
     """ Called by other part of the code to get a list of boards """
