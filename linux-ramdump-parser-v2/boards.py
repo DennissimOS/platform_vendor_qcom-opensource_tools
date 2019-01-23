@@ -508,9 +508,10 @@ class BoardTrinket(Board):
         self.socid = socid
         self.board_num = "trinket"
         self.cpu = 'CORTEXA53'
-        self.ram_start = 0x20000000
+        self.ram_start = 0x40000000
         self.smem_addr = 0x6000000
-        self.phys_offset = 0x20000000
+        self.smem_addr_buildinfo = 0x6007210
+        self.phys_offset = 0x40000000
         self.imem_start = 0x0c100000
         self.kaslr_addr = 0x0c1256d0
         self.wdog_addr = 0x0c125658
