@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2019, The Linux Foundation. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 and
@@ -1227,7 +1227,7 @@ class RamDump():
         if board.wdog_addr is not None:
             print_out_str(
             'TZ address: {0:x}'.format(board.wdog_addr))
-        if self.phys_offset is None:
+        if board.phys_offset is not None:
             self.phys_offset = board.phys_offset
         self.tz_addr = board.wdog_addr
         self.ebi_start = board.ram_start
