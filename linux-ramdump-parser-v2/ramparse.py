@@ -27,7 +27,7 @@ from optparse import OptionParser
 import parser_util
 from ramdump import RamDump
 from print_out import print_out_str, set_outfile, print_out_section, print_out_exception, flush_outfile
-
+from sched_info import verify_active_cpus
 # Please update version when something is changed!'
 VERSION = '2.0'
 
@@ -166,6 +166,7 @@ if __name__ == '__main__':
     (options, args) = parser.parse_args()
     if options.minidump:
         default_list = []
+        default_list.append("Schedinfo")
         default_list.append("Dmesg")
         default_list.append("RTB")
         default_list.append("DebugImage")
@@ -378,6 +379,9 @@ if __name__ == '__main__':
         get_wdog_timing(dump)
         print_out_str('---------- end watchdog time-----')
 
+    # Always verify Scheduler requirement for active_cpus
+    verify_active_cpus(dump)
+
     # we called parser.add_option with dest=p.cls.__name__ above,
     # so if the user passed that option then `options' will have a
     # p.cls.__name__ attribute.
@@ -389,6 +393,7 @@ if __name__ == '__main__':
         parsers_to_run = [p for p in parser_util.get_parsers()
                       if getattr(options, p.cls.__name__)
                       or (options.everything and not p.optional)]
+
     for i,p in enumerate(parsers_to_run):
         if i == 0:
             sys.stderr.write("\n")
