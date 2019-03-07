@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013, 2015, 2017-2018 The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2013, 2015, 2017-2019 The Linux Foundation. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 and
@@ -186,7 +186,7 @@ def do_dump_stacks(ramdump, check_for_panic=0):
                                 + offset_thread_group
             while True:
                 dump_thread_group(ramdump, init_thread_group,
-                                  task_out, check_for_panic)
+                                  task_out, taskhighlight_out, check_for_panic)
                 init_next_task = init_next_task + prev_offset
                 orig_init_next_task = init_next_task
                 next_task = ramdump.read_word(init_next_task)
