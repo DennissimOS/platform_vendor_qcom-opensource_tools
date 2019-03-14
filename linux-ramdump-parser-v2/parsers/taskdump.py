@@ -14,6 +14,7 @@ from print_out import print_out_str
 from parser_util import register_parser, RamParser, cleanupString
 taskhighlight_out = None
 highlight_tasks = "\n=====List of all runing and uninterruptable sleep process====\n"
+import ctypes
 
 def find_panic(ramdump, addr_stack, thread_task_name):
     if ramdump.arm64:
@@ -81,6 +82,8 @@ def dump_thread_group(ramdump, thread_group, task_out, taskhighlight_out, check_
         thread_task_prio = ramdump.read_int(next_thread_prio)
         if thread_task_prio is None:
             return
+        # Task prio is an integer and it can be -1 for DL tasks.
+        thread_task_prio = ctypes.c_int(thread_task_prio).value
         thread_task_pid = ramdump.read_int(next_thread_pid)
         if thread_task_pid is None:
             return
