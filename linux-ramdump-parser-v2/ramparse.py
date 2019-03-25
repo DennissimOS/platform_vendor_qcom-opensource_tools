@@ -379,8 +379,9 @@ if __name__ == '__main__':
         get_wdog_timing(dump)
         print_out_str('---------- end watchdog time-----')
 
-    # Always verify Scheduler requirement for active_cpus
-    verify_active_cpus(dump)
+    # Always verify Scheduler requirement for active_cpus on 64-bit platforms.
+    if options.arm64:
+        verify_active_cpus(dump)
 
     # we called parser.add_option with dest=p.cls.__name__ above,
     # so if the user passed that option then `options' will have a
