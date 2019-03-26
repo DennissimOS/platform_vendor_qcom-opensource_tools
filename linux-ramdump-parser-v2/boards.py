@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
+# Copyright (c) 2014-2019, The Linux Foundation. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 and
@@ -502,6 +502,21 @@ class BoardSDM710(Board):
         self.wdog_addr = 0x146BF658
         self.imem_file_name = 'OCIMEM.BIN'
 
+class BoardTrinket(Board):
+    def __init__(self, socid):
+        super(BoardTrinket, self).__init__()
+        self.socid = socid
+        self.board_num = "trinket"
+        self.cpu = 'CORTEXA53'
+        self.ram_start = 0x40000000
+        self.smem_addr = 0x6000000
+        self.smem_addr_buildinfo = 0x6007210
+        self.phys_offset = 0x40000000
+        self.imem_start = 0x0c100000
+        self.kaslr_addr = 0x0c1256d0
+        self.wdog_addr = 0x0c125658
+        self.imem_file_name = 'OCIMEM.BIN'
+
 class BoardQCS605(Board):
     def __init__(self, socid):
         super(BoardQCS605, self).__init__()
@@ -639,6 +654,34 @@ class BoardPoorwills(Board):
         self.phys_offset = 0x80000000
         self.imem_start = 0x14680000
         self.wdog_addr =  0x14680658
+        self.imem_file_name = 'OCIMEM.BIN'
+
+class BoardPrairie(Board):
+    def __init__(self, socid):
+        super(BoardPrairie, self).__init__()
+        self.socid = socid
+        self.board_num = "sdxprairie"
+        self.cpu = 'CORTEXA7'
+        self.ram_start = 0x80000000
+        self.smem_addr = 0xFE40000
+        self.phys_offset = 0x80000000
+        self.imem_start = 0x14680000
+        self.wdog_addr =  0x14680658
+        self.imem_file_name = 'OCIMEM.BIN'
+
+class BoardKona(Board):
+    def __init__(self, socid):
+        super(BoardKona, self).__init__()
+        self.socid = socid
+        self.board_num = "kona"
+        self.cpu = 'CORTEXA53'
+        self.ram_start = 0x80000000
+        self.smem_addr = 0x900000
+        self.smem_addr_buildinfo = 0x907210
+        self.phys_offset = 0xA0000000
+        self.imem_start = 0x14680000
+        self.kaslr_addr = 0x146bf6d0
+        self.wdog_addr = 0x146BF658
         self.imem_file_name = 'OCIMEM.BIN'
 
 boards = []
@@ -873,14 +916,21 @@ boards.append(BoardQCS605(socid=347))
 boards.append(BoardQCS405(socid=352))
 boards.append(BoardQCS403(socid=373))
 
+boards.append(BoardTrinket(socid=394))
+
 boards.append(BoardPoorwills(socid=334))
 boards.append(BoardPoorwills(socid=335))
+
+boards.append(BoardPrairie(socid=357))
+boards.append(BoardPrairie(socid=368))
 
 boards.append(Board439(socid=353))
 boards.append(Board439(socid=363))
 
 boards.append(Board429(socid=354))
 boards.append(Board429(socid=364))
+
+boards.append(BoardKona(socid=356))
 
 def get_supported_boards():
     """ Called by other part of the code to get a list of boards """
