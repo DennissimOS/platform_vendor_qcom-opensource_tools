@@ -199,6 +199,11 @@ class PageTracking(RamParser):
             print_out_str('CONFIG_PAGE_OWNER not defined')
             return
 
+        if self.ramdump.kernel_version >= (4, 4):
+            if not self.ramdump.is_config_defined('CONFIG_PAGE_OWNER_ENABLE_DEFAULT'):
+                print_out_str('CONFIG_PAGE_OWNER_ENABLE_DEFAULT not defined')
+                return
+
         if (self.ramdump.kernel_version >= (3, 19, 0)):
             if self.ramdump.is_config_defined('CONFIG_SPARSEMEM'):
                 mem_section = self.ramdump.read_word('mem_section')
