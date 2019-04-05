@@ -68,11 +68,12 @@ def verify_active_cpus(ramdump):
         else:
             min_req_cpus = 1
 
-        if (cluster_nr_oncpus < min_req_cpus) or (cluster_nr_isocpus > min_req_cpus):
+        if ((cluster_nr_oncpus - cluster_nr_isocpus) < min_req_cpus):
                 print_out_str("\n************ WARNING **************\n")
                 print_out_str("\tMinimum active cpus are not available in the cluster {0} \n".format(i))
                 print_out_str("\tCluster cpus: {0:b}  Online cpus: {1:b} Isolated cpus: {2:b}\n".format(
                                 cluster_cpus, cluster_online_cpus, cluster_isolated_cpus))
+                print_out_str("\n***********************************\n")
 
 @register_parser('--sched-info', 'Verify scheduler\'s various parameter status')
 class Schedinfo(RamParser):
