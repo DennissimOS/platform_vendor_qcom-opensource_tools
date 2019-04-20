@@ -140,6 +140,8 @@ class PageTracking(RamParser):
                     handle = self.ramdump.read_structure_field(
                         temp_page_ext, 'struct page_ext', 'handle')
 
+                if handle is None:
+                    return -1, -1
                 slabindex = handle & 0x1fffff
                 handle_offset = (handle >> 0x15) & 0x3ff
                 handle_offset = handle_offset << 4
