@@ -191,12 +191,17 @@ class MemStats(RamParser):
                             'struct idr_layer', 'ary')
                 idr_layer_ary = self.ramdump.read_word(zram_index_idr +
                                                    idr_layer_ary_offset)
-                zram_meta = idr_layer_ary + self.ramdump.field_offset(
-                                'struct zram', 'meta')
-                zram_meta = self.ramdump.read_word(zram_meta)
-                mem_pool = zram_meta + self.ramdump.field_offset(
+                try:
+                    zram_meta = idr_layer_ary + self.ramdump.field_offset(
+                                    'struct zram', 'meta')
+                    zram_meta = self.ramdump.read_word(zram_meta)
+                    mem_pool = zram_meta + self.ramdump.field_offset(
                             'struct zram_meta', 'mem_pool')
-                mem_pool = self.ramdump.read_word(mem_pool)
+                    mem_pool = self.ramdump.read_word(mem_pool)
+                except TypeError:
+                    mem_pool = idr_layer_ary + self.ramdump.field_offset(
+                                'struct zram', 'mem_pool')
+                    mem_pool = self.ramdump.read_word(mem_pool)
                 if mem_pool is None:
                     stat_val = 0
                 else:
