@@ -41,19 +41,18 @@ def verify_active_cpus(ramdump):
     if (cluster_id_off is None):
         print_out_str("\n Invalid cluster topology detected\n")
 
-    clusters = ramdump.read_int(cpu_topology_addr + cluster_id_off + ((nr_cpus - 1) * cpu_topology_size))
-    clusters += 1
-
     # INFO: from 4.19 onwards, core_sibling mask contains only online cpus,
     #       find out cluster cpus dynamically.
 
-    cluster_nrcpus = [0] * (clusters)
+    cluster_nrcpus = [0]
     for j in range(0, nr_cpus):
         c_id = ramdump.read_int(cpu_topology_addr + (j * cpu_topology_size) + cluster_id_off)
+        if len(cluster_nrcpus) <= c_id :
+            cluster_nrcpus.extend([0])
         cluster_nrcpus[c_id] += 1
 
     next_cluster_cpu = 0
-    for i in range(0, clusters):
+    for i in range(0, len(cluster_nrcpus)):
         cluster_cpus = ramdump.read_word(cpu_topology_addr +
                                         (next_cluster_cpu * cpu_topology_size) + core_sib_off)
         cluster_online_cpus = cpu_online_bits & cluster_cpus
@@ -69,11 +68,12 @@ def verify_active_cpus(ramdump):
         else:
             min_req_cpus = 1
 
-        if (cluster_nr_oncpus < min_req_cpus) or (cluster_nr_isocpus > min_req_cpus):
+        if ((cluster_nr_oncpus - cluster_nr_isocpus) < min_req_cpus):
                 print_out_str("\n************ WARNING **************\n")
                 print_out_str("\tMinimum active cpus are not available in the cluster {0} \n".format(i))
                 print_out_str("\tCluster cpus: {0:b}  Online cpus: {1:b} Isolated cpus: {2:b}\n".format(
                                 cluster_cpus, cluster_online_cpus, cluster_isolated_cpus))
+                print_out_str("\n***********************************\n")
 
 @register_parser('--sched-info', 'Verify scheduler\'s various parameter status')
 class Schedinfo(RamParser):

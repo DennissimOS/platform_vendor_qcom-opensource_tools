@@ -541,6 +541,7 @@ class BoardQCS405(Board):
         self.smem_addr = 0x6300000
         self.phys_offset = 0x40000000
         self.imem_start = 0x8600000
+        self.kaslr_addr = 0x86006d0
         self.wdog_addr = 0x8600658
         self.imem_file_name = 'OCIMEM.BIN'
 
@@ -641,6 +642,21 @@ class BoardSteppe(Board):
         self.imem_start = 0x14680000
         self.kaslr_addr = 0x146aa6d0
         self.wdog_addr = 0x146aa658
+        self.imem_file_name = 'OCIMEM.BIN'
+
+class BoardLito(Board):
+    def __init__(self, socid):
+        super(BoardLito, self).__init__()
+        self.socid = socid
+        self.board_num = "lito"
+        self.cpu = 'CORTEXA53'
+        self.ram_start = 0x80000000
+        self.smem_addr = 0x900000
+        self.smem_addr_buildinfo = 0x907210
+        self.phys_offset = 0x80000000
+        self.imem_start = 0x14680000
+        self.kaslr_addr = 0x146ab6d0
+        self.wdog_addr = 0x146ab658
         self.imem_file_name = 'OCIMEM.BIN'
 
 class BoardPoorwills(Board):
@@ -907,6 +923,8 @@ boards.append(BoardSteppe(socid=355))
 boards.append(BoardSteppe(socid=369))
 boards.append(BoardSteppe(socid=365))
 boards.append(BoardSteppe(socid=366))
+
+boards.append(BoardLito(socid=400))
 
 boards.append(BoardSDM710(socid=336))
 boards.append(BoardSDM710(socid=337))
