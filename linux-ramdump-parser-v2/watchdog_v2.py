@@ -358,7 +358,6 @@ sysdbg_cpu64_register_names_v1_4 = [
     ('__reserved1', '__reserved1', False),
     ('__reserved2', '__reserved2', False),
     ('__reserved3', '__reserved3', False),
-    ('__reserved4', '__reserved4', False),
 ]
 
 sysdbg_cpu64_ctxt_regs_type_v1_4 = ''.join([
@@ -413,7 +412,6 @@ sysdbg_cpu64_ctxt_regs_type_v1_4 = ''.join([
     'Q',  # __reserved1
     'Q',  # __reserved2
     'Q',  # __reserved3
-    'Q',  # __reserved4
 ])
 
 sysdbg_neon128_register_names_v1_4 = [
