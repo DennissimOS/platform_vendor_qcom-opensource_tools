@@ -1,4 +1,4 @@
-# Copyright (c) 2012,2014-2015,2017-2018 The Linux Foundation. All rights reserved.
+# Copyright (c) 2012,2014-2015,2017-2019 The Linux Foundation. All rights reserved.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 and
@@ -206,6 +206,7 @@ class PageTracking(RamParser):
                 print_out_str('CONFIG_PAGE_OWNER_ENABLE_DEFAULT not defined')
                 return
 
+        mem_section = None
         if (self.ramdump.kernel_version >= (3, 19, 0)):
             if self.ramdump.is_config_defined('CONFIG_SPARSEMEM'):
                 mem_section = self.ramdump.read_word('mem_section')
