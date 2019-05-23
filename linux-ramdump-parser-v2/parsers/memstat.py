@@ -22,12 +22,15 @@ class MemStats(RamParser):
         vm = self.ramdump.read_word(vmlist + self.vm_offset)
         if vm is None:
             return
-        size = self.ramdump.read_structure_field(
-                vm, 'struct vm_struct', 'size')
-        flags = self.ramdump.read_structure_field(
+
+        pages = self.ramdump.read_structure_field(
+                vm, 'struct vm_struct', 'nr_pages')
+        vm_flags = self.ramdump.read_structure_field(
                     vm, 'struct vm_struct', 'flags')
-        if flags == VM_ALLOC:
-            self.vmalloc_size = self.vmalloc_size + size
+        if vm_flags is None:
+            return
+        if (vm_flags & VM_ALLOC == VM_ALLOC):
+            self.vmalloc_size = self.vmalloc_size + pages
 
     def pages_to_mb(self, pages):
         val = 0
@@ -41,14 +44,24 @@ class MemStats(RamParser):
             val = (bytes / 1024) / 1024
         return val
 
+    def pages_to_mb(self, pages):
+        val = 0
+        if pages != 0:
+            val = (pages * 4) / 1024
+        return val
+
     def calculate_vmalloc(self):
-        next_offset = self.ramdump.field_offset('struct vmap_area', 'list')
-        vmlist = self.ramdump.read_word('vmap_area_list')
-        vm_offset = self.ramdump.field_offset('struct vmap_area', 'vm')
-        self.vm_offset = vm_offset
-        list_walker = llist.ListWalker(self.ramdump, vmlist, next_offset)
-        list_walker.walk(vmlist, self.list_func)
-        self.vmalloc_size = self.bytes_to_mb(self.vmalloc_size)
+        if self.ramdump.address_of('nr_vmalloc_pages') is None:
+            next_offset = self.ramdump.field_offset('struct vmap_area', 'list')
+            vmlist = self.ramdump.read_word('vmap_area_list')
+            vm_offset = self.ramdump.field_offset('struct vmap_area', 'vm')
+            self.vm_offset = vm_offset
+            list_walker = llist.ListWalker(self.ramdump, vmlist, next_offset)
+            list_walker.walk(vmlist, self.list_func)
+            self.vmalloc_size = self.pages_to_mb(self.vmalloc_size)
+        else:
+            val = self.ramdump.read_u64('nr_vmalloc_pages')
+            self.vmalloc_size = self.pages_to_mb(val)
 
     def calculate_vm_stat(self):
         # Other memory :  NR_ANON_PAGES + NR_FILE_PAGES + NR_PAGETABLE \
