@@ -330,7 +330,10 @@ def parse_softirq_stat(ramdump):
     index = 0
     size_of_irq_stat = ramdump.sizeof('irq_cpustat_t')
     while index < no_of_cpus:
-        irq_stat = irq_stat_addr + index*size_of_irq_stat
+        if ramdump.kernel_version >= (4, 19):
+            irq_stat = irq_stat_addr + ramdump.per_cpu_offset(index)
+        else:
+            irq_stat = irq_stat_addr + index*size_of_irq_stat
         softirq_pending = ramdump.read_structure_field(
                                 irq_stat, 'irq_cpustat_t', '__softirq_pending')
         pending = ""
