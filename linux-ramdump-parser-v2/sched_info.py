@@ -36,6 +36,9 @@ def verify_active_cpus(ramdump):
     else:
         cpu_isolated_bits = 0
 
+    if(cpu_isolated_bits is None): #QCS404/None handling
+        cpu_isolated_bits = 0
+
     nr_cpus = ramdump.get_num_cpus()
 
     if (cluster_id_off is None):

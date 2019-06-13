@@ -1559,6 +1559,8 @@ class RamDump():
             return None
 
         addr += self.field_offset(struct_name, field)
+        if size == 2:
+            return self.read_u16(addr, virtual)
         if size == 4:
             return self.read_u32(addr, virtual)
         if size == 8:
